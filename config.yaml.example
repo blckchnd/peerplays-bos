@@ -1,0 +1,15 @@
+# Please see bos_auto/config-defaults.yaml for description
+
+node: wss://api.ppy.blckchnd.com
+
+network: alice
+
+redis_host: redis
+redis_port: 6379
+#redis_password: <your redis password>
+
+passphrase: <your python peerplays wallet password>
+
+BOOKIE_PROPOSER: <your witness account name>
+
+BOOKIE_APPROVER: <your witness account name>

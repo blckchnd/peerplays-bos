@@ -1,0 +1,46 @@
+bos_incidents:
+    database:
+        use: mongodb
+        retry_policy:
+            num: 3
+            wait_in_ms: 1
+        mongodb:
+            seeds:
+                - mongo:27017
+            databases: 
+                incident-storage:
+                    collections:
+                        incident:
+                            schema: incident-schema.json
+                            unique: 
+                                - unique_string
+                                - provider_info.name
+                            indices:
+                                -
+                                    - id_string
+                        event:
+                            schema: event-schema.json
+                            unique: 
+                                - id_string
+                        status:
+                
+        mongodbtest:
+            seeds:
+                - mongo:27017
+            databases: 
+                incident-storage-test:
+                    collections:
+                        incident:
+                            schema: incident-schema.json
+                            unique: 
+                                - unique_string
+                                - provider_info.name
+                            indices:
+                                -
+                                    - id_string
+                        event:
+                            schema: event-schema.json
+                            unique: 
+                                - id_string
+                        status:
+            

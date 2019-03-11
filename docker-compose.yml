@@ -1,0 +1,64 @@
+version: '3.1'
+
+services:
+
+  bos-auto:
+    image: blckchnd/bos
+    command: bos-auto api --host 0.0.0.0 --port 8010 
+    volumes:
+      - ./data/bos:/data
+      - ./data/peerplays:/root/.local/share/peerplays
+      - ./config.yaml:/bos-auto/config.yaml
+      - ./incident_storage_config.yaml:/bos-auto/incident_storage_config.yaml
+    links:
+      - mongo
+      - redis
+    ports:
+      - 8010:8010
+
+  bos-worker:
+    image: blckchnd/bos
+    command: bos-auto worker 
+    volumes:
+      - ./data/bos:/data
+      - ./data/peerplays:/root/.local/share/peerplays
+      - ./config.yaml:/bos-auto/config.yaml
+      - ./incident_storage_config.yaml:/bos-auto/incident_storage_config.yaml
+    links:
+      - bos-auto
+      - mongo
+      - redis
+
+  bos-mint:
+    image: blckchnd/bos
+    command: bos-mint start  --port 8001 --host 0.0.0.0
+    ports:
+      - 127.0.0.1:8001:8001 
+    volumes:
+      - ./data/bos:/data
+      - ./data/peerplays:/root/.local/share/peerplays
+      - ./config-bos-mint.yaml:/bos-auto/config-bos-mint.yaml
+
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ./data/mongo:/data/db
+    expose:
+      - 27017
+
+  redis:
+    image: redis
+    expose:
+      - 6379
+
+  bos:
+    image: blckchnd/bos
+    build:
+      context: .
+    volumes:
+      - ./data:/data
+      - ./data/peerplays:/root/.local/share/peerplays
+      - ./config.yaml:/bos-auto/config.yaml
+      - ./incident_storage_config.yaml:/bos-auto/incident_storage_config.yaml
+      - ./config-bos-mint.yaml:/bos-auto/config-bos-mint.yaml
