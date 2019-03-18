@@ -10,8 +10,8 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8  
 
-WORKDIR bos-auto
-RUN pip3 install bos-auto pyyaml==3.13
+WORKDIR bos-mint
+RUN pip3 install bos-mint
 
 
 

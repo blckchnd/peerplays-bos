@@ -30,7 +30,10 @@ services:
       - redis
 
   bos-mint:
-    image: blckchnd/bos
+    build:
+      context: .
+      dockerfile: Dockerfile-mint
+    image: blckchnd/bos-mint
     command: bos-mint start  --port 8001 --host 0.0.0.0
     ports:
       - 127.0.0.1:8001:8001 
