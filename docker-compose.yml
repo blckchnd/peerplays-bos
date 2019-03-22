@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   bos-auto:
-    image: blckchnd/bos
+    image: blckchnd/bos-auto:latest
     command: bos-auto api --host 0.0.0.0 --port 8010 
     volumes:
       - ./data/bos:/data
@@ -17,7 +17,7 @@ services:
       - 8010:8010
 
   bos-worker:
-    image: blckchnd/bos
+    image: blckchnd/bos-auto:latest
     command: bos-auto worker 
     volumes:
       - ./data/bos:/data
@@ -33,10 +33,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-mint
-    image: blckchnd/bos-mint
+    image: blckchnd/bos-mint:latest
     command: bos-mint start  --port 8001 --host 0.0.0.0
     ports:
-      - 127.0.0.1:8001:8001 
+            #- 127.0.0.1:8001:8001 
+      - 8001:8001 
     volumes:
       - ./data/bos:/data
       - ./data/peerplays:/root/.local/share/peerplays
@@ -56,7 +57,7 @@ services:
       - 6379
 
   bos:
-    image: blckchnd/bos
+    image: blckchnd/bos-auto:latest
     build:
       context: .
     volumes:
